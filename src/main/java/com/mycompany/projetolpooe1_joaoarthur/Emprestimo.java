@@ -1,3 +1,5 @@
+package com.mycompany.projetolpooe1_joaoarthur;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -11,7 +13,7 @@ public class Emprestimo implements Serializable {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "funcionario_id", nullable = false)
+    @JoinColumn(name = "funcionario_id", nullable = true) // Aqui, pode ser nullable se não for obrigatório
     private Funcionario funcionario;
 
     @ManyToOne

@@ -1,3 +1,4 @@
+package com.mycompany.projetolpooe1_joaoarthur;
 import java.io.Serializable;
 import javax.persistence.*;
 
