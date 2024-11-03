@@ -58,9 +58,10 @@ public class ProjetoLPOOE1_JoaoArthur {
             em.persist(emprestimo1);
 
             Emprestimo emprestimo2 = new Emprestimo();
-            emprestimo2.setUsuario(usuario2);
+            emprestimo2.setFuncionario(funcionario2);
+            // Campo nao permitido para ser null
             emprestimo2.setDataEmprestimo(LocalDate.now().minusDays(10));
-            // Neste caso, o empréstimo está ativo
+            // Campo permitido para ser null
             // emprestimo2.setDataDevolucao(LocalDate.now().plusDays(4));
             emprestimo2.setLivrosEmprestados(Set.of(livro3));
             em.persist(emprestimo2);

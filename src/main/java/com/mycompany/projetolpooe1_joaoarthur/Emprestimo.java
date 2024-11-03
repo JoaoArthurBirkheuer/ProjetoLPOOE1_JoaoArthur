@@ -13,11 +13,11 @@ public class Emprestimo implements Serializable {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "funcionario_id", nullable = true) // Aqui, pode ser nullable se não for obrigatório
+    @JoinColumn(name = "funcionario_id", nullable = true)
     private Funcionario funcionario;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = true)
     private Usuario usuario;
 
     @ManyToMany
