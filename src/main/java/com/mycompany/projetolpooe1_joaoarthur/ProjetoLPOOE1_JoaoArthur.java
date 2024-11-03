@@ -28,6 +28,10 @@ public class ProjetoLPOOE1_JoaoArthur {
 
             Funcionario funcionario2 = new Funcionario("Funcionario 2", "44455566600", "funcionario2@example.com");
             em.persist(funcionario2);
+            
+            //Inserindo Funcionário aqui para testar id
+            Usuario usuario3 = new Usuario("Nome 3","02039627022","joao@gmail.com");
+            em.persist(usuario3);
 
             // Adicionar Livros
             Livro livro1 = new Livro();
@@ -45,7 +49,7 @@ public class ProjetoLPOOE1_JoaoArthur {
             livro3.setAutor("Autor C");
             em.persist(livro3);
 
-            // Adicionar Empréstimos (se necessário)
+            // Adicionar Empréstimos Exemplos
             Emprestimo emprestimo1 = new Emprestimo();
             emprestimo1.setUsuario(usuario1);
             emprestimo1.setDataEmprestimo(LocalDate.now());
@@ -56,7 +60,8 @@ public class ProjetoLPOOE1_JoaoArthur {
             Emprestimo emprestimo2 = new Emprestimo();
             emprestimo2.setUsuario(usuario2);
             emprestimo2.setDataEmprestimo(LocalDate.now().minusDays(10));
-            emprestimo2.setDataDevolucao(LocalDate.now().plusDays(4));
+            // Neste caso, o empréstimo está ativo
+            // emprestimo2.setDataDevolucao(LocalDate.now().plusDays(4));
             emprestimo2.setLivrosEmprestados(Set.of(livro3));
             em.persist(emprestimo2);
             
@@ -69,7 +74,8 @@ public class ProjetoLPOOE1_JoaoArthur {
                 System.out.println("Problema na transação, revertendo...\n\n\n");
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
+            // Para observar log de erros
+            // e.printStackTrace();
         } finally {
             em.close();
             emf.close();
