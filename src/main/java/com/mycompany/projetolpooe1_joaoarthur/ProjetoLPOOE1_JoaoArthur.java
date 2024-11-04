@@ -66,6 +66,24 @@ public class ProjetoLPOOE1_JoaoArthur {
             emprestimo2.setLivrosEmprestados(Set.of(livro3));
             em.persist(emprestimo2);
             
+            Usuario usuario6 = em.find(Usuario.class, 6L);
+            if (usuario6 == null) {
+            System.out.println("Usuário com ID 6 não existe.");
+            }  
+            else {
+            em.remove(usuario6);
+            System.out.println("Usuário com ID 6 removido com sucesso.");
+            }
+            // Outro teste
+            em.find(Usuario.class, 2L);
+            if (usuario2 == null) {
+            System.out.println("Usuário com ID 2 não existe.");
+            } 
+            else {
+            em.remove(usuario2);
+            System.out.println("Usuário com ID 2 removido com sucesso.");
+            }
+            
             em.getTransaction().commit();
 
             System.out.println("Registros de teste adicionados com sucesso!");
@@ -75,7 +93,7 @@ public class ProjetoLPOOE1_JoaoArthur {
                 System.out.println("Problema na transação, revertendo...");
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
+            // e.printStackTrace();
         } finally {
             em.close();
             emf.close();
