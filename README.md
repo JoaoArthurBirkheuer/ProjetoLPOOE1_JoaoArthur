@@ -18,15 +18,21 @@ O arquivo `pom.xml` inclui as dependências necessárias para o funcionamento do
 O projeto está configurado para utilizar um banco de dados PostgreSQL chamado `BibliotecaLPOO`. As configurações de conexão são definidas no arquivo `persistence.xml`, localizado em `src/main/resources/META-INF`.
 
 ```xml
-<persistence-unit name="BibliotecaLPOO">
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <persistence-unit name="BibliotecaLPOO" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <properties>
-        <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-        <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/BibliotecaLPOO"/>
-        <property name="javax.persistence.jdbc.user" value="postgres"/>
-        <property name="javax.persistence.jdbc.password" value="jb12"/>
-        <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/ProjetoLPOOE1_JoaoArthur"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="hibernate.hbm2ddl.auto" value="create"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="jb12"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+      <property name="hibernate.show_sql" value="true"/>
     </properties>
-</persistence-unit>
+  </persistence-unit>
+</persistence>
 ```
 
 ## Estrutura das Classes e Relacionamentos
