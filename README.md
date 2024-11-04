@@ -22,8 +22,8 @@ O projeto está configurado para utilizar um banco de dados PostgreSQL chamado `
     <properties>
         <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
         <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/BibliotecaLPOO"/>
-        <property name="javax.persistence.jdbc.user" value="username"/>
-        <property name="javax.persistence.jdbc.password" value="password"/>
+        <property name="javax.persistence.jdbc.user" value="postgres"/>
+        <property name="javax.persistence.jdbc.password" value="jb12"/>
         <property name="hibernate.hbm2ddl.auto" value="update"/>
     </properties>
 </persistence-unit>
