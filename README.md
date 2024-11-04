@@ -3,13 +3,15 @@ Projeto da Disciplina LPOO com meu tema escolhido, utilizando DB PostgreSQL, JPA
 
 Abaixo, segue diagrama para orientação das conexões entre as entidades do projeto.
 
-![diagramaLPOO](https://github.com/user-attachments/assets/e2de7b2d-0452-44ca-bf01-2679336e8e8c)
+![diagramaLPOO](https://github.com/user-attachments/assets/23075a98-3dd6-49aa-8a77-c7a42d55965e)
 
---> Explicação das Relações:
+*** Explicação das Relações ***
 
-Herança (Pessoa -> Usuario, Funcionario): Pessoa é uma superclasse abstrata que define propriedades comuns para Usuario e Funcionario.
+--> Pessoa é uma classe abstrata contendo os atributos comuns (nome, cpf, email, ehFuncionario).
 
-Um para um (Emprestimo -> Funcionario/Usuario): Cada empréstimo é associado a um único funcionário ou usuário.
+--> Usuario e Funcionario herdam de Pessoa, sendo Funcionario a única classe com o atributo adicional "cargo".
 
-Muitos para muitos (Emprestimo -> Livro): Cada empréstimo pode incluir múltiplos livros, e cada livro pode estar em múltiplos empréstimos.
+--> Emprestimo representa o empréstimo de livros, com atributos como dataEmprestimo, dataDevolucao e uma coleção livrosEmprestados.
+
+--> A associação entre Emprestimo e Livro é de muitos para muitos, e entre Emprestimo e as classes Usuario ou Funcionario é de um para muitos.
 
