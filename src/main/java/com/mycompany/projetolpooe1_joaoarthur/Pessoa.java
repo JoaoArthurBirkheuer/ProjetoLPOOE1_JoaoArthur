@@ -11,13 +11,13 @@ public abstract class Pessoa implements Serializable {
     @SequenceGenerator(name = "pessoa_seq", sequenceName = "seq_pessoa", allocationSize = 1)
     private Long idPessoa;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String nome;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 30)
     private String email;
 
     @Column

@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Table(name = "tb_funcionario")
 public class Funcionario extends Pessoa {
     
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String cargo;
     public Funcionario(String nome, String cpf, String email) {
         super(nome, cpf, email, true);
