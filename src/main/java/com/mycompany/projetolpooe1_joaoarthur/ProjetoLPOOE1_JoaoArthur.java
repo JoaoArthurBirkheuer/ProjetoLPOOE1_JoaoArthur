@@ -9,7 +9,7 @@ import java.util.Set;
 public class ProjetoLPOOE1_JoaoArthur {
 
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("BibliotecaLPOO");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProjetoLPOOE1_JoaoArthur");
         EntityManager em = emf.createEntityManager();
 
         try {
