@@ -55,13 +55,13 @@ Este projeto utiliza **herança**, **associações** e o mapeamento ORM com JPA/
 
 ### **Usuario**
 - Representa um usuário comum da biblioteca.
-- Possui uma relação de um-para-muitos com `Emprestimo`, permitindo que um usuário tenha múltiplos empréstimos registrados.
+- Pode realizar empréstimos e avaliações.
 
 ### **Funcionario**
 - Representa um funcionário da biblioteca.
 - Além dos atributos herdados de `Pessoa`, possui:
   - `cargo`: obrigatório e único.
-- Também pode realizar avaliações de livros.
+- Pode realizar empréstimos e avaliações.
 
 ### **Livro**
 - Representa os livros disponíveis na biblioteca.
@@ -88,6 +88,7 @@ Este projeto utiliza **herança**, **associações** e o mapeamento ORM com JPA/
   - `nota`: uma nota de 0 a 10 (float).
   - `idLivro`: ID do livro avaliado.
   - `idPessoa`: ID da pessoa (usuário ou funcionário) que fez a avaliação.
+- A relação que Funcionário e Usuário têm com a classe Avaliação é de um para muitos
 
 ---
 
@@ -139,10 +140,3 @@ As tabelas geradas pelo JPA representam as entidades concretas e suas relações
   - Tabela associativa para a relação muitos-para-muitos entre `Emprestimo` e `Livro`.
 
 ---
-
-- **`tb_emprestimo`**:
-  - Registra os empréstimos.
-  - Contém os campos `idEmprestimo`, `dataEmprestimo` e `dataDevolucao`.
-
-- **`tb_emprestimo_livro`**:
-  - Tabela associativa para a relação muitos-para-muitos entre `Emprestimo` e `Livro`.
