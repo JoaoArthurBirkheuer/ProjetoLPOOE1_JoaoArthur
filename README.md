@@ -35,37 +35,106 @@ O projeto está configurado para utilizar um banco de dados PostgreSQL chamado `
 </persistence>
 ```
 
-## Estrutura das Classes e Relacionamentos
+# Estrutura de Classes e Relacionamentos - Biblioteca
 
-![diagramaLPOO](https://github.com/user-attachments/assets/23075a98-3dd6-49aa-8a77-c7a42d55965e)
+Este projeto utiliza **herança**, **associações** e o mapeamento ORM com JPA/Hibernate para modelar as entidades e suas interações em uma biblioteca.
 
-O projeto é estruturado em classes que utilizam herança e associações para modelar as entidades e suas interações:
+![image](https://github.com/user-attachments/assets/43230b93-e437-4b1b-9fe4-55e5eb626559)
 
-### Classes Principais
+## Classes Principais
 
-- **Pessoa** (`@MappedSuperclass`): Classe abstrata que serve como base para `Usuario` e `Funcionario`, contendo atributos comuns como `idPessoa`, `nome`, `cpf` e `email`. O identificador `idPessoa` é gerado automaticamente utilizando uma sequência com `@SequenceGenerator`.
+### **Pessoa** (`@MappedSuperclass`)
+- Classe abstrata que serve como base para `Usuario` e `Funcionario`.
+- Contém atributos comuns:
+  - `idPessoa` (gerado automaticamente com `@SequenceGenerator`).
+  - `nome`, `cpf` e `email`.
+- Possui uma lista de avaliações realizadas (`avaliacoes`), modelando o relacionamento entre a pessoa e as avaliações que ela fez.
 
-- **Usuario**: Representa um usuário comum da biblioteca que pode realizar empréstimos. Possui uma relação de um para muitos com `Emprestimo`, permitindo que um usuário tenha múltiplos empréstimos registrados.
+### **Usuario**
+- Representa um usuário comum da biblioteca.
+- Possui uma relação de um-para-muitos com `Emprestimo`, permitindo que um usuário tenha múltiplos empréstimos registrados.
 
-- **Funcionario**: Representa um funcionário da biblioteca. Além dos atributos herdados, possui um campo adicional `cargo`, que é único e obrigatório.
+### **Funcionario**
+- Representa um funcionário da biblioteca.
+- Além dos atributos herdados de `Pessoa`, possui:
+  - `cargo`: obrigatório e único.
+- Também pode realizar avaliações de livros.
 
-- **Livro**: Representa os livros disponíveis na biblioteca, com atributos `idLivro`, `titulo` (limitado a 100 caracteres) e `autor` (limitado a 50 caracteres).
+### **Livro**
+- Representa os livros disponíveis na biblioteca.
+- Atributos:
+  - `idLivro` (chave primária).
+  - `titulo` (máximo de 100 caracteres).
+  - `autor` (máximo de 50 caracteres).
+- Possui uma lista de avaliações (`avaliacoes`) relacionadas ao livro.
 
-- **Emprestimo**: Representa um empréstimo realizado. Contém atributos como `idEmprestimo`, `dataEmprestimo` e `dataDevolucao`. Um `Emprestimo` pode estar associado a um `Usuario` ou a um `Funcionario`, bem como a múltiplos `Livro`, estabelecendo uma relação de muitos-para-muitos.
+### **Emprestimo**
+- Representa um empréstimo realizado.
+- Atributos:
+  - `idEmprestimo` (chave primária).
+  - `dataEmprestimo` e `dataDevolucao`.
+- Relacionamentos:
+  - Está associado a um `Usuario` ou a um `Funcionario`.
+  - Pode conter múltiplos `Livro`, estabelecendo uma relação muitos-para-muitos.
 
-### Relacionamentos
+### **Avaliacao**
+- Representa as avaliações que podem ser feitas sobre um livro.
+- Atributos:
+  - `idAvaliacao` (chave primária).
+  - `descricao`: texto da avaliação.
+  - `nota`: uma nota de 0 a 10 (float).
+  - `idLivro`: ID do livro avaliado.
+  - `idPessoa`: ID da pessoa (usuário ou funcionário) que fez a avaliação.
 
-- **Pessoa e Emprestimo**: A relação entre `Pessoa` (que inclui `Usuario` e `Funcionario`) e `Emprestimo` é de um para muitos. Um `Usuario` ou `Funcionario` pode ter vários `Emprestimos` registrados, representando a associação `@OneToMany`.
+---
 
-- **Livro e Emprestimo**: A relação entre `Livro` e `Emprestimo` é de muitos para muitos. Cada `Emprestimo` pode incluir vários `Livros`, e cada `Livro` pode estar em múltiplos `Emprestimos`, utilizando uma tabela associativa `@ManyToMany`.
+## Relacionamentos e Mapeamento
+
+### **Pessoa e Avaliacao**
+- Uma `Pessoa` (seja `Usuario` ou `Funcionario`) pode fazer várias avaliações.
+- Relacionamento de um-para-muitos entre `Pessoa` e `Avaliacao`.
+
+### **Pessoa e Emprestimo**
+- Um `Usuario` ou `Funcionario` pode ter vários empréstimos registrados.
+- Relacionamento de um-para-muitos.
+
+### **Livro e Avaliacao**
+- Um livro pode ter várias avaliações.
+- Relacionamento de um-para-muitos entre `Livro` e `Avaliacao`.
+
+### **Livro e Emprestimo**
+- Relacionamento muitos-para-muitos.
+- Um `Emprestimo` pode incluir vários `Livro`, e cada `Livro` pode estar em múltiplos `Emprestimos`.
+
+---
 
 ## Estrutura de Tabelas
 
-Após a configuração, as tabelas geradas pelo JPA representam as entidades e suas relações:
+As tabelas geradas pelo JPA representam as entidades e suas relações, com as seguintes definições:
 
-- **tb_pessoa**: Contém informações de `Pessoa` com `idPessoa` como chave primária.
-- **tb_usuario**: Herdada de `tb_pessoa`, contém usuários.
-- **tb_funcionario**: Herdada de `tb_pessoa`, contém funcionários, incluindo o campo `cargo`.
-- **tb_livro**: Representa os livros da biblioteca.
-- **tb_emprestimo**: Registra os empréstimos, associados a `Usuario` ou `Funcionario`.
-- **tb_emprestimo_livro**: Tabela associativa para a relação muitos-para-muitos entre `Emprestimo` e `Livro`.
+- **`tb_pessoa`**:
+  - Tabela base para `Usuario` e `Funcionario`.
+  - Contém informações como `idPessoa`, `nome`, `cpf`, `email` e `ehFuncionario`.
+
+- **`tb_usuario`**:
+  - Herdada de `tb_pessoa`.
+  - Representa os usuários comuns.
+
+- **`tb_funcionario`**:
+  - Herdada de `tb_pessoa`.
+  - Contém um campo adicional: `cargo`.
+
+- **`tb_livro`**:
+  - Representa os livros disponíveis na biblioteca.
+  - Contém atributos como `idLivro`, `titulo` e `autor`.
+
+- **`tb_avaliacao`**:
+  - Registra as avaliações realizadas.
+  - Contém os campos `idAvaliacao`, `descricao`, `nota`, `idLivro` e `idPessoa`.
+
+- **`tb_emprestimo`**:
+  - Registra os empréstimos.
+  - Contém os campos `idEmprestimo`, `dataEmprestimo` e `dataDevolucao`.
+
+- **`tb_emprestimo_livro`**:
+  - Tabela associativa para a relação muitos-para-muitos entre `Emprestimo` e `Livro`.
