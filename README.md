@@ -45,10 +45,13 @@ Este projeto utiliza **herança**, **associações** e o mapeamento ORM com JPA/
 
 ### **Pessoa** (`@MappedSuperclass`)
 - Classe abstrata que serve como base para `Usuario` e `Funcionario`.
-- Contém atributos comuns:
-  - `idPessoa` (gerado automaticamente com `@SequenceGenerator`).
-  - `nome`, `cpf` e `email`.
-- Possui uma lista de avaliações realizadas (`avaliacoes`), modelando o relacionamento entre a pessoa e as avaliações que ela fez.
+- **Não gera uma tabela própria no banco de dados**, pois utiliza a estratégia `InheritanceType.TABLE_PER_CLASS`. 
+- Atributos comuns, herdados por `Usuario` e `Funcionario`:
+  - `idPessoa`: identificador gerado automaticamente com `@SequenceGenerator`.
+  - `nome`: obrigatório, limitado a 50 caracteres.
+  - `cpf`: único, obrigatório, limitado a 11 caracteres.
+  - `email`: único, obrigatório, limitado a 30 caracteres.
+  - `ehFuncionario`: booleano que indica se a pessoa é um funcionário.
 
 ### **Usuario**
 - Representa um usuário comum da biblioteca.
@@ -110,19 +113,15 @@ Este projeto utiliza **herança**, **associações** e o mapeamento ORM com JPA/
 
 ## Estrutura de Tabelas
 
-As tabelas geradas pelo JPA representam as entidades e suas relações, com as seguintes definições:
-
-- **`tb_pessoa`**:
-  - Tabela base para `Usuario` e `Funcionario`.
-  - Contém informações como `idPessoa`, `nome`, `cpf`, `email` e `ehFuncionario`.
+As tabelas geradas pelo JPA representam as entidades concretas e suas relações:
 
 - **`tb_usuario`**:
-  - Herdada de `tb_pessoa`.
-  - Representa os usuários comuns.
+  - Representa os usuários da biblioteca.
+  - Contém atributos herdados de `Pessoa`, como `idPessoa`, `nome`, `cpf` e `email`.
 
 - **`tb_funcionario`**:
-  - Herdada de `tb_pessoa`.
-  - Contém um campo adicional: `cargo`.
+  - Representa os funcionários da biblioteca.
+  - Contém atributos herdados de `Pessoa` e o campo adicional `cargo`.
 
 - **`tb_livro`**:
   - Representa os livros disponíveis na biblioteca.
@@ -131,6 +130,15 @@ As tabelas geradas pelo JPA representam as entidades e suas relações, com as s
 - **`tb_avaliacao`**:
   - Registra as avaliações realizadas.
   - Contém os campos `idAvaliacao`, `descricao`, `nota`, `idLivro` e `idPessoa`.
+
+- **`tb_emprestimo`**:
+  - Registra os empréstimos.
+  - Contém os campos `idEmprestimo`, `dataEmprestimo` e `dataDevolucao`.
+
+- **`tb_emprestimo_livro`**:
+  - Tabela associativa para a relação muitos-para-muitos entre `Emprestimo` e `Livro`.
+
+---
 
 - **`tb_emprestimo`**:
   - Registra os empréstimos.
